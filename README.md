@@ -1,34 +1,20 @@
 # claude-config
 
-Shared Claude Code configuration for the r-xla organization.
+Shared [Claude Code](https://docs.anthropic.com/en/docs/claude-code) configuration for the [r-xla](https://github.com/r-xla) organization.
 
-## Setup
-
-Clone this repo as a sibling to your other r-xla repos:
-
-```bash
-git clone git@github.com:r-xla/claude-config.git
-```
-
-Your directory structure should look like:
+r-xla brings XLA-based machine learning compilation to R. The packages form a layered stack:
 
 ```
-<parent>/
-├── claude-config/   # this repo
-├── repo1/
-├── repo2/
-└── ...
+anvil          User-facing: JIT compilation + autodiff (like JAX for R)
+  |
+stablehlo      IR layer: create and manipulate StableHLO programs
+  |
+pjrt           Runtime: compile and execute on CPU/CUDA/Metal/TPU
+  |
+tengen         Tensor generics: shape(), dtype(), device(), as_array()
+xlamisc        Shared utilities: LRU cache, formatting helpers
 ```
 
-## Usage
+This repo centralizes the Claude Code instructions and skills that are shared across all r-xla packages. Each package imports these shared instructions via its `CLAUDE.md` and adds package-specific context on top.
 
-In each r-xla repo's `CLAUDE.md`, add this line at the top to import the shared configuration:
-
-```markdown
-@../claude-config/CLAUDE.md
-
-# Repo-specific instructions
-...
-```
-
-The relative path `../claude-config/CLAUDE.md` resolves from the importing file's location, so it works from any sibling repo.
+See [CONTRIBUTING.md](CONTRIBUTING.md) for setup instructions and how to structure per-repo configuration.
