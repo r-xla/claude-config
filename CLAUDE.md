@@ -118,3 +118,11 @@ To check for linter errors, run `jarl check .` from the package root.
 ## Pkgdown
 
 When adding a new exported function, ensure it's in `_pkgdown.yml` file.
+
+## Updating CLAUDE.md/.claude
+
+When asked to make changes to CLAUDE.md (or create a new skill), there are two cases:
+
+1. The rule is project-specific (e.g. only applies to the `pjrt` package).
+   In this case, edit `pjrt/CLAUDE.md` or `pjrt/.claude/`
+2. It's a general development guideline, then add it to `claude-config/CLAUDE.md` or `/claude-config/.claude`
