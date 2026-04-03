@@ -105,3 +105,8 @@ Never edit `README.md` directly -- it is generated from `README.Rmd`. Always edi
 When adding a new S3 generic or changing exports, always run `devtools::document()` before `devtools::load_all()` or `devtools::test()` — the NAMESPACE file must be regenerated for new generics/exports to be registered.
 
 Every package must document all its environment variables and R options in the `@section Environment Variables:` and `@section Options:` roxygen2 sections of the package-level documentation (typically in `R/package.R`). When adding a new `Sys.getenv()` or `getOption()` call, always update these sections.
+
+
+## Pkgdown
+
+When adding a new exported function, ensure it's in `_pkgdown.yml` file.
