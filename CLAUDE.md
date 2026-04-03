@@ -2,7 +2,11 @@
 
 ## Overview
 
-r-xla brings XLA-based machine learning compilation to R. All packages are developed together as a cohesive ecosystem -- when implementing a feature that spans multiple packages, make changes across all of them in a single effort. For example, adding a new operation may require changes in stablehlo (IR), pjrt (execution), anvil (user API), and tengen (generics).
+r-xla brings XLA-based machine learning compilation to R.
+All packages are developed together as a cohesive ecosystem -- when implementing a feature that spans multiple packages, make changes across all of them in a single effort.
+For example, adding a new operation may require changes in stablehlo (IR), pjrt (execution), anvil (user API), and tengen (generics).
+They all share a common CLAUDE.md document (this file), but each have their own CLAUDE.md as well.
+If you make changes to a repository, always ensure that you have read it's specific CLAUDE.md as well.
 
 The packages form a layered stack:
 
@@ -34,11 +38,11 @@ Creates and transforms StableHLO programs (a portable ML computation representat
 
 ### pjrt
 
-R interface to PJRT (Pretty much Just another RunTime). Compiles stableHLO programs to hardware-specific executables and runs them. Manages devices, buffers, and async execution. Supports CPU, CUDA, Metal, and TPU backends.
+R interface to PJRT (Pluggable Jit RunTime). Compiles stableHLO programs to hardware-specific executables and runs them. Manages devices, buffers, and async execution. Supports CPU, CUDA, and Metal backends.
 
 ### tengen
 
-Defines S3 generics for tensor operations: `shape()`, `dtype()`, `device()`, `as_array()`, `ndims()`, `nelts()`. Also provides the data type hierarchy (`BooleanType`, `IntegerType`, `FloatType`, etc.). This is the common interface that pjrt and anvil implement.
+Defines S3 generics for tensor operations: `shape()`, `dtype()`, `device()`, `as_array()`, `ndims()`, `nelts()`. Also provides the data type hierarchy (`BooleanType`, `IntegerType`, `FloatType`, etc.).
 
 ### xlamisc
 
@@ -72,11 +76,11 @@ To access a sibling package from any repo, use `../<package>/`. For example, fro
 
 ## Keeping Documentation in Sync
 
-When making structural design changes to a package, ensure that the "Design" section in the package's AGENTS.md is updated to reflect the new structure.
+When making important structural design changes to a package, ensure that the "Design" section in the package's AGENTS.md is updated to reflect the new structure.
 
 ## Common Development Commands
 
-All R packages (anvil, stablehlo, pjrt, tengen, xlamisc) use standard R tooling:
+All R packages use standard R tooling:
 
 ```r
 devtools::load_all()    # Load for development
@@ -87,7 +91,7 @@ devtools::install()     # Install the package
 devtools::build()       # Build tar.gz
 
 # Run a specific test file
-testthat::test_file("tests/testthat/test-foo.R")
+testthat::test_active_file("tests/testthat/test-foo.R")
 ```
 
 ### Formatting and Linting
@@ -98,14 +102,18 @@ To check for linter errors, run `jarl check .` from the package root.
 
 ### Documentation Rules
 
-Never modify `.Rd` files manually -- they are generated from roxygen2 comments (lines starting with `#'`). Edit the roxygen2 strings in the R source files and run `devtools::document()` to regenerate them.
+* Never edit `.Rd` files manually. Instead, edit the corresponding roxygen2 comments (lines starting with `#'`) and run `devtools::document()` to re-generate the `.Rd` files.
+* Never edit `README.md` directly -- it is generated from `README.Rmd`. Always edit `README.Rmd` and then run `devtools::build_readme()` to regenerate `README.md`.
+* When adding a new S3 methods (such as `print.<Class-Name>`), always run `devtools::document()` afterwards to re-generate the NAMESPACE.
+* Environment variables and options are documented in package-level documentation (typically `R/package.R`).
+* Check the `man-roxygen/` directory for existing templates when writing documentation.  Use `@template` to avoid duplicating common parameter descriptions.
+  Only create new templates for sections that will likely be re-used.
+* For functions, always document the return value (section `#' @return'`).
 
-Never edit `README.md` directly -- it is generated from `README.Rmd`. Always edit `README.Rmd` and then run `devtools::install()` followed by `devtools::build_readme()` to regenerate `README.md`.
+## Style
 
-When adding a new S3 generic or changing exports, always run `devtools::document()` before `devtools::load_all()` or `devtools::test()` — the NAMESPACE file must be regenerated for new generics/exports to be registered.
-
-Every package must document all its environment variables and R options in the `@section Environment Variables:` and `@section Options:` roxygen2 sections of the package-level documentation (typically in `R/package.R`). When adding a new `Sys.getenv()` or `getOption()` call, always update these sections.
-
+* For length-1 vectors, don't use `c()`. For example, use `1L` instead of `c(1L)`.
+* Only add comments for complex code.
 
 ## Pkgdown
 
