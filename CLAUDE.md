@@ -70,13 +70,38 @@ All repos are assumed to be sibling directories under a common parent:
 
 To access a sibling package from any repo, use `../<package>/`. For example, from within `anvil/`, the stablehlo source is at `../stablehlo/`.
 
+## Keeping Documentation in Sync
+
+When making structural design changes to a package, ensure that the "Design" section in the package's AGENTS.md is updated to reflect the new structure.
+
 ## Common Development Commands
 
 All R packages (anvil, stablehlo, pjrt, tengen, xlamisc) use standard R tooling:
 
 ```r
 devtools::load_all()    # Load for development
-devtools::test()        # Run tests
+devtools::test()        # Run all tests
 devtools::document()    # Generate roxygen2 docs
 devtools::check()       # CRAN compliance checks
+devtools::install()     # Install the package
+devtools::build()       # Build tar.gz
+
+# Run a specific test file
+testthat::test_file("tests/testthat/test-foo.R")
 ```
+
+### Formatting and Linting
+
+Packages with a Makefile (anvil, stablehlo, pjrt) support `make format` to format code (uses `air` for R, `clang-format` for C++).
+
+To check for linter errors, run `jarl check .` from the package root.
+
+### Documentation Rules
+
+Never modify `.Rd` files manually -- they are generated from roxygen2 comments (lines starting with `#'`). Edit the roxygen2 strings in the R source files and run `devtools::document()` to regenerate them.
+
+Never edit `README.md` directly -- it is generated from `README.Rmd`. Always edit `README.Rmd` and then run `devtools::install()` followed by `devtools::build_readme()` to regenerate `README.md`.
+
+When adding a new S3 generic or changing exports, always run `devtools::document()` before `devtools::load_all()` or `devtools::test()` — the NAMESPACE file must be regenerated for new generics/exports to be registered.
+
+Every package must document all its environment variables and R options in the `@section Environment Variables:` and `@section Options:` roxygen2 sections of the package-level documentation (typically in `R/package.R`). When adding a new `Sys.getenv()` or `getOption()` call, always update these sections.

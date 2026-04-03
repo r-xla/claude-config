@@ -1,0 +1,21 @@
+{
+    "name": "r-xla",
+    "owner": {
+        "name": "r-xla"
+    },
+    "metadata": {
+        "description": "Claude Skills for the r-xla ecosystem — releasing R packages built on XLA.",
+        "version": "0.1.0"
+    },
+    "plugins": [
+        {
+            "name": "r-xla-skills",
+            "description": "Release workflows for r-xla R packages (single and multi-package)",
+            "source": "./",
+            "strict": false,
+            "skills": [
+                "./skills/r-xla/release-package"
+            ]
+        }
+    ]
+}

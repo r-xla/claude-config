@@ -1,20 +1,20 @@
 # claude-config
 
-Shared [Claude Code](https://docs.anthropic.com/en/docs/claude-code) configuration for the [r-xla](https://github.com/r-xla) organization.
+A Claude Code skill marketplace for the r-xla ecosystem.
 
-r-xla brings XLA-based machine learning compilation to R. The packages form a layered stack:
+## Installation
 
-```
-anvil          User-facing: JIT compilation + autodiff (like JAX for R)
-  |
-stablehlo      IR layer: create and manipulate StableHLO programs
-  |
-pjrt           Runtime: compile and execute on CPU/CUDA/Metal/TPU
-  |
-tengen         Tensor generics: shape(), dtype(), device(), as_array()
-xlamisc        Shared utilities: LRU cache, formatting helpers
-```
+Run `/plugin` in Claude Code and add this repository as a marketplace. Skills will then be available as slash commands in any project.
 
-This repo centralizes the Claude Code instructions and skills that are shared across all r-xla packages. Each package imports these shared instructions via its `CLAUDE.md` and adds package-specific context on top.
+## Available Skills
 
-See [CONTRIBUTING.md](CONTRIBUTING.md) for setup instructions and how to structure per-repo configuration.
+| Skill | Command | Description |
+|-------|---------|-------------|
+| [r-xla-release-package](skills/r-xla/release-package/SKILL.md) | `/r-xla-release-package` | Release a single R package (from inside the package directory) |
+
+## Adding a New Skill
+
+1. Create `skills/r-xla/<skill-name>/SKILL.md` with YAML frontmatter.
+2. Register it in `.claude-plugin/marketplace.json` under the `skills` array.
+
+See the [Anthropic guide on writing skills](https://resources.anthropic.com/hubfs/The-Complete-Guide-to-Building-Skill-for-Claude.pdf) for best practices.
