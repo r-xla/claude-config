@@ -10,7 +10,7 @@ Run `/plugin` in Claude Code and add this repository as a marketplace. Skills wi
 
 | Skill | Command | Description |
 |-------|---------|-------------|
-| [r-xla-release-package](skills/r-xla/release-package/SKILL.md) | `/r-xla-release-package` | Release a single R package (from inside the package directory) |
+| [r-xla-prepare-release](skills/r-xla/prepare-release/SKILL.md) | `/r-xla-prepare-release` | Prepare a release PR for a single R package (from inside the package directory) |
 | [r-xla-prepare-pr](skills/r-xla/prepare-pr/SKILL.md) | `/r-xla-prepare-pr` | Run all checks and prepare an R package PR (from inside the package directory) |
 
 ## Adding a New Skill

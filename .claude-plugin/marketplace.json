@@ -14,7 +14,7 @@
             "source": "./",
             "strict": false,
             "skills": [
-                "./skills/r-xla/release-package",
+                "./skills/r-xla/prepare-release",
                 "./skills/r-xla/prepare-pr"
             ]
         }

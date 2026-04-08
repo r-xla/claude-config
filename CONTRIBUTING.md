@@ -19,7 +19,7 @@ claude-config/
 │   └── r-xla/
 │       ├── release/
 │       │   └── SKILL.md
-│       └── release-package/
+│       └── prepare-release/
 │           └── SKILL.md
 ├── CLAUDE.md              # Shared ecosystem instructions
 └── CONTRIBUTING.md
