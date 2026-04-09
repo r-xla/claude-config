@@ -114,6 +114,7 @@ To check for linter errors, run `jarl check .` from the package root.
 
 * For length-1 vectors, don't use `c()`. For example, use `1L` instead of `c(1L)`.
 * Only add comments for complex code.
+* Never use `:::` to access a package's own internal objects. Within a package (including tests), non-exported functions and objects are already available directly -- just call them by name.
 
 ## Pkgdown
 

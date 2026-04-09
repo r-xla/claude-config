@@ -41,7 +41,33 @@ NEWS.md:  <first heading>
 
 Then show the NEWS.md content for the upcoming release so the user can review it.
 
-### Step 3: Ask Release Type
+### Step 3: Check for Remotes
+
+Check whether `DESCRIPTION` contains a `Remotes:` field. If it does, the package
+cannot be released to CRAN with remote dependencies.
+
+For each remote listed, look up the latest release version on CRAN (or the
+package's repository if not on CRAN) and suggest replacing the remote dependency
+with a minimum version requirement.
+
+Display the remotes to the user:
+
+```
+Remotes found in DESCRIPTION:
+- <owner>/<repo>
+- <owner>/<repo2>
+```
+
+Use `AskUserQuestion` to ask which minimum version to require for each package.
+Suggest the latest released version of each package as the default.
+
+Once the user confirms, remove the `Remotes:` field from `DESCRIPTION` and update
+the corresponding entries in `Imports:` or `Depends:` to include the agreed
+version requirements (e.g., `package (>= x.y.z)`).
+
+If there are no `Remotes:` entries, skip this step silently.
+
+### Step 4: Ask Release Type
 
 Suggest an appropriate release type based on the NEWS.md content:
 
@@ -69,7 +95,7 @@ Calculate the new version:
 
 Display: "Preparing release: `<package>` `<current>` → `<new version>`"
 
-### Step 4: Check Git History for Missing NEWS.md Entries
+### Step 5: Check Git History for Missing NEWS.md Entries
 
 Find the last release tag and list commits since then:
 
@@ -92,7 +118,7 @@ user-visible effect, merge commits.
 If there are likely missing entries, summarise them for the user and ask whether
 to add them to NEWS.md before proceeding.
 
-### Step 5: Create Release Branch
+### Step 6: Create Release Branch
 
 ```bash
 git checkout main
@@ -105,12 +131,12 @@ If a `release/*` branch already exists, ask the user how to proceed using
 - Delete it and create a fresh one
 - Abort
 
-### Step 6: Update DESCRIPTION — Version
+### Step 7: Update DESCRIPTION — Version
 
 Replace the `Version:` field with the new version (e.g., `0.1.0.9000` → `0.2.0`).
 Use the Edit tool.
 
-### Step 7: Update NEWS.md
+### Step 8: Update NEWS.md
 
 Replace the development version header with the release version.
 
@@ -122,7 +148,7 @@ For example:
 
 Use the Edit tool.
 
-### Step 8: Commit and Push
+### Step 9: Commit and Push
 
 ```bash
 git add DESCRIPTION NEWS.md
@@ -133,7 +159,7 @@ EOF
 git push -u origin release/<version>
 ```
 
-### Step 9: Create PR
+### Step 10: Create PR
 
 Use the `/pr-create` skill to create a pull request for the release branch.
 
@@ -143,7 +169,7 @@ The PR body should include the NEWS.md entries for this release.
 
 Wait for CI to pass. The `/pr-create` skill handles CI monitoring and fixing.
 
-### Step 10: Merge and Tag
+### Step 11: Merge and Tag
 
 Once CI passes:
 
@@ -167,7 +193,7 @@ git tag v<version>
 git push origin v<version>
 ```
 
-### Step 11: Bump to Development Version
+### Step 12: Bump to Development Version
 
 1. Update `DESCRIPTION`: append `.9000` to the version (e.g., `0.2.0` → `0.2.0.9000`).
 
@@ -189,7 +215,7 @@ EOF
 git push origin main
 ```
 
-### Step 12: Done
+### Step 13: Done
 
 Display a summary:
 
