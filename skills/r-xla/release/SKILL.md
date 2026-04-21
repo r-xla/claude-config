@@ -1,5 +1,5 @@
 ---
-name: r-xla-release-package
+name: r-xla-release
 description: >
   Prepare a release of a single R package. Use when the user says "release this
   package", "bump version", "cut a release", or wants to publish a new version
@@ -215,7 +215,24 @@ EOF
 git push origin main
 ```
 
-### Step 13: Done
+### Step 13: Create GitHub Release
+
+Create a GitHub release for the tag pushed in Step 11.
+
+Extract the NEWS.md section for this release — everything under the
+`# <package> <version>` heading up to the next `#` heading — and use it as the
+release notes body.
+
+```bash
+gh release create v<version> \
+  --title "<package> <version>" \
+  --notes "$(cat <<'EOF'
+<NEWS.md section for this release>
+EOF
+)"
+```
+
+### Step 14: Done
 
 Display a summary:
 
@@ -226,6 +243,7 @@ Package:  <name>
 Version:  <version>
 Tag:      v<version>
 PR:       #<number>
+Release:  <url from `gh release view v<version> --json url -q .url`>
 ```
 
 ## Important Rules
