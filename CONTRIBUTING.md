@@ -42,7 +42,7 @@ Each r-xla package has its own `CLAUDE.md` with package-specific content. The sh
 **Guidelines:**
 
 - **Only add what's specific to this package.** The shared config already covers the ecosystem overview and standard R development commands.
-- **Document non-obvious conventions.** For example, anvil documents its 1-based vs 0-based indexing boundary with stablehlo.
+- **Document non-obvious conventions.** For example, anvl documents its 1-based vs 0-based indexing boundary with stablehlo.
 - **Keep it concise.** `CLAUDE.md` is loaded into every conversation. Verbose instructions waste context.
 
 ## Making Changes

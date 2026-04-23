@@ -4,14 +4,14 @@
 
 r-xla brings XLA-based machine learning compilation to R.
 All packages are developed together as a cohesive ecosystem -- when implementing a feature that spans multiple packages, make changes across all of them in a single effort.
-For example, adding a new operation may require changes in stablehlo (IR), pjrt (execution), anvil (user API), and tengen (generics).
+For example, adding a new operation may require changes in stablehlo (IR), pjrt (execution), anvl (user API), and tengen (generics).
 They all share a common CLAUDE.md document (this file), but each have their own CLAUDE.md as well.
 If you make changes to a repository, always ensure that you have read it's specific CLAUDE.md as well.
 
 The packages form a layered stack:
 
 ```
-anvil          (user-facing: JIT compilation + autodiff, like JAX for R)
+anvl           (user-facing: JIT compilation + autodiff, like JAX for R)
   |
 stablehlo      (IR layer: create and manipulate StableHLO programs)
   |
@@ -23,12 +23,12 @@ xlamisc        (shared utilities: LRU cache, formatting helpers)
 
 Supporting repos:
 
-- **docker** -- Daily Docker images (CPU + CUDA) with anvil pre-installed.
-- **benchmarks** -- Performance comparisons of anvil vs PyTorch/torch.
+- **docker** -- Daily Docker images (CPU + CUDA) with anvl pre-installed.
+- **benchmarks** -- Performance comparisons of anvl vs PyTorch/torch.
 
 ## Packages
 
-### anvil
+### anvl
 
 Code transformation framework for R (like JAX). Provides `nv_*` API functions and `nvl_*` primitives for JIT compilation (`nv_jit()`) and automatic differentiation. Uses 1-based indexing; delegates to stablehlo (0-based) for IR generation.
 
@@ -50,11 +50,11 @@ Shared utility library: `LRUCache`, `seq0()`, `list_of()`, `shapevec_repr()`, `v
 
 ### docker
 
-Dockerfiles and CI for building daily images: `anvil-cpu`, `anvil-cuda`, and benchmark variants. Published to Docker Hub and GHCR.
+Dockerfiles and CI for building daily images: `anvl-cpu`, `anvl-cuda`, and benchmark variants. Published to Docker Hub and GHCR.
 
 ### benchmarks
 
-MLP training benchmarks comparing anvil, R torch, and PyTorch on CPU (single/multi-threaded). Uses Docker images for reproducible environments. Results published via Quarto website.
+MLP training benchmarks comparing anvl, R torch, and PyTorch on CPU (single/multi-threaded). Uses Docker images for reproducible environments. Results published via Quarto website.
 
 ## Navigating Between Packages
 
@@ -62,7 +62,7 @@ All repos are assumed to be sibling directories under a common parent:
 
 ```
 <parent>/
-├── anvil/
+├── anvl/
 ├── stablehlo/
 ├── pjrt/
 ├── tengen/
@@ -72,7 +72,7 @@ All repos are assumed to be sibling directories under a common parent:
 └── claude-config/
 ```
 
-To access a sibling package from any repo, use `../<package>/`. For example, from within `anvil/`, the stablehlo source is at `../stablehlo/`.
+To access a sibling package from any repo, use `../<package>/`. For example, from within `anvl/`, the stablehlo source is at `../stablehlo/`.
 
 ## Keeping Documentation in Sync
 
@@ -96,7 +96,7 @@ testthat::test_active_file("tests/testthat/test-foo.R")
 
 ### Formatting and Linting
 
-Packages with a Makefile (anvil, stablehlo, pjrt) support `make format` to format code (uses `air` for R, `clang-format` for C++).
+Packages with a Makefile (anvl, stablehlo, pjrt) support `make format` to format code (uses `air` for R, `clang-format` for C++).
 
 To check for linter errors, run `jarl check .` from the package root.
 
