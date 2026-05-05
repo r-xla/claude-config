@@ -110,6 +110,10 @@ To check for linter errors, run `jarl check .` from the package root.
   Only create new templates for sections that will likely be re-used.
 * For functions, always document the return value (section `#' @return'`).
 
+## Test Rules
+
+* never call `set.seed()` in tests, use `withr::local_seed()` instead
+
 ## Style
 
 * For length-1 vectors, don't use `c()`. For example, use `1L` instead of `c(1L)`.
