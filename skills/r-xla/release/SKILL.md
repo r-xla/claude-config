@@ -144,7 +144,7 @@ The header format is: `# <package> (development version)`
 Replace with: `# <package> <version>`
 
 For example:
-- `# anvil (development version)` → `# anvil 0.2.0`
+- `# anvl (development version)` → `# anvl 0.2.0`
 
 Use the Edit tool.
 
