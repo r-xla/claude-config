@@ -42,7 +42,7 @@ R interface to PJRT (Pluggable Jit RunTime). Compiles stableHLO programs to hard
 
 ### tengen
 
-Defines S3 generics for tensor operations: `shape()`, `dtype()`, `device()`, `as_array()`, `ndims()`, `nelts()`. Also provides the `DataType` dtype enum (`as_dtype()`, `dtype_bits()`, `is_dtype_*()`).
+Defines S3 generics for tensor operations: `shape()`, `dtype()`, `device()`, `as_array()`, `ndims()`, `nelts()`. Also provides the `DataType` dtype enum (`as_dtype()`, `dtype_width()`, `is_dtype_*()`).
 
 ### xlamisc
 
