@@ -122,6 +122,13 @@ To check for linter errors, run `jarl check .` from the package root.
 ## Test Rules
 
 * never call `set.seed()` in tests, use `withr::local_seed()` instead
+* Test files mirror source files: the tests for `R/<name>.R` live in `tests/testthat/test-<name>.R`.
+  Don't open a test file named after a *feature* that cuts across several sources -- when a feature's tests
+  start accumulating, either move them into the test files matching the sources they exercise, or give the
+  feature its own `R/<name>.R` and name the test file after that. Refactor tests into place as part of the
+  change that adds them, rather than leaving them where they first landed.
+* Structure tests with `describe()` / `it()` blocks: one `describe()` naming the function or object under
+  test, and one `it()` per behaviour, phrased as a sentence completing "it ...".
 
 ## Style
 
@@ -141,3 +148,11 @@ When asked to make changes to CLAUDE.md (or create a new skill), there are two c
 1. The rule is project-specific (e.g. only applies to the `pjrt` package).
    In this case, edit `pjrt/CLAUDE.md` or `pjrt/.claude/`
 2. It's a general development guideline, then add it to `claude-config/CLAUDE.md` or `/claude-config/.claude`
+
+## Git
+
+We cannot force push to r-xla, so if a branch is already pushed, do not reset this commit, but revert instead
+(undo changes by adding a new commit).
+Do not reset existing commits. Undo changes by adding a new commit. 
+
+
