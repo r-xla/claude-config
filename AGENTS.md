@@ -30,7 +30,7 @@ Supporting repos:
 
 ### anvl
 
-Code transformation framework for R (like JAX). Provides `nv_*` API functions and `nvl_*` primitives for JIT compilation (`nv_jit()`) and automatic differentiation. Uses 1-based indexing; delegates to stablehlo (0-based) for IR generation.
+Code transformation framework for R (like JAX). Provides `nv_*` API functions and `prim_*` primitives for JIT compilation (`jit()`) and automatic differentiation (`gradient()`, `value_and_gradient()`). Uses 1-based indexing; delegates to stablehlo (0-based) for IR generation.
 
 ### stablehlo
 
@@ -42,7 +42,7 @@ R interface to PJRT (Pluggable Jit RunTime). Compiles stableHLO programs to hard
 
 ### tengen
 
-Defines S3 generics for tensor operations: `shape()`, `dtype()`, `device()`, `as_array()`, `ndims()`, `nelts()`. Also provides the `DataType` dtype enum (`as_dtype()`, `dtype_width()`, `is_dtype_*()`).
+Defines S3 generics for array operations: `shape()`, `dtype()`, `device()`, `as_array()`, `naxes()`, `nelts()`. Also provides the `DataType` dtype enum (`as_dtype()`, `dtype_width()`, `is_dtype_*()`).
 
 ### xlamisc
 
@@ -118,6 +118,15 @@ To check for linter errors, run `jarl check .` from the package root.
 * For functions, always document the return value (section `#' @return'`).
 * Internal functions that are not very short or not very obvious should have a list a short documenting comment
 * Do not write comments / documentation about how things used to be before a change. This is not helpful for readers, who will usually only see the present state of code and now know about the past state.
+
+### NEWS.md
+
+* Keep entries short -- one to three lines, in the same terse style as the
+  entries of the already-released versions further down the file. Say what
+  changed and, for a breaking change, what to write instead; leave the
+  reasoning, the mechanism and the examples to the documentation.
+* Keep entries in sync with the code: when a change is revised, revise its
+  entry instead of adding a second one.
 
 ## Test Rules
 
