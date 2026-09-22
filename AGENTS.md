@@ -142,6 +142,10 @@ To check for linter errors, run `jarl check .` from the package root.
 ## Style
 
 * For length-1 vectors, don't use `c()`. For example, use `1L` instead of `c(1L)`.
+* Write a whole-number literal with the `L` suffix wherever the value *is* an integer --
+  an index, a count, an axis number, a bit width -- and in the arithmetic and comparisons
+  around it: `idx + 1L`, `n %% 2L == 0L`, `e[[2L]]`, `substr(s, 1L, 1L)`, `naxes(x) == 0L`.
+  Plain `1` is for a real number (`0.5`, `trim = 0`, `base = exp(1)`).
 * Only add comments for complex code.
 * Never use `:::` to access a package's own internal objects. Within a package (including tests), non-exported functions and objects are already available directly -- just call them by name.
 * Vectorize where possible. Prefer `vapply()` / `lapply()` / `Map()` / `mapply()` over `for` loops that build up a result, and avoid repeated `c(x, new)` / `list(..., new)` inside loops (quadratic growth). Loops are fine for side effects or when each iteration depends on the previous one.
