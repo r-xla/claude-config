@@ -4,7 +4,7 @@
 
 r-xla brings XLA-based machine learning compilation to R.
 All packages are developed together as a cohesive ecosystem -- when implementing a feature that spans multiple packages, make changes across all of them in a single effort.
-For example, adding a new operation may require changes in stablehlo (IR), pjrt (execution), anvl (user API), and tengen (generics).
+For example, adding a new operation may require changes in stablehlo (IR), pjrt (execution), anvl (user API), and xlamisc (generics).
 They all share a common CLAUDE.md document (this file), but each have their own CLAUDE.md as well.
 If you make changes to a repository, always ensure that you have read it's specific CLAUDE.md as well.
 
@@ -17,8 +17,7 @@ stablehlo      (IR layer: create and manipulate StableHLO programs)
   |
 pjrt           (runtime: compile and execute on CPU/CUDA/Metal/TPU)
   |
-tengen         (tensor generics: shape(), dtype(), device(), as_array())
-xlamisc        (shared utilities: LRU cache, formatting helpers)
+xlamisc        (tensor generics and data types: shape(), dtype(), DataType)
 ```
 
 Supporting repos:
@@ -40,13 +39,9 @@ Creates and transforms StableHLO programs (a portable ML computation representat
 
 R interface to PJRT (Pluggable Jit RunTime). Compiles stableHLO programs to hardware-specific executables and runs them. Manages devices, buffers, and async execution. Supports CPU, CUDA, and Metal backends.
 
-### tengen
-
-Defines S3 generics for array operations: `shape()`, `dtype()`, `device()`, `as_array()`, `naxes()`, `nelts()`. Also provides the `DataType` dtype enum (`as_dtype()`, `dtype_width()`, `is_dtype_*()`).
-
 ### xlamisc
 
-Shared utility library: `LRUCache`, `seq0()`, `list_of()`, `shapevec_repr()`, `vec_repr()`, `format_bib()`. Depended on by the other packages for common operations.
+Defines S3 generics for array operations: `shape()`, `dtype()`, `device()`, `as_array()`, `as_raw()`, `naxes()`, `nelts()`. Also provides the `DataType` dtype enum (`as_dtype()`, `dtype_width()`, `is_dtype_*()`). Depended on by pjrt, stablehlo and anvl. Helpers used by only one package live in that package, not here.
 
 ### docker
 
@@ -65,7 +60,6 @@ All repos are assumed to be sibling directories under a common parent:
 ├── anvl/
 ├── stablehlo/
 ├── pjrt/
-├── tengen/
 ├── xlamisc/
 ├── docker/
 ├── benchmarks/
@@ -108,6 +102,7 @@ To check for linter errors, run `jarl check .` from the package root.
 
 ### Documentation Rules
 
+* Man page titles use title case: capitalize every word except articles, short prepositions and conjunctions (`a`, `an`, `the`, `and`, `or`, `of`, `to`, `in`, `on`, `at`, `by`, `for`, `from`, `as`, `with`, `into`) unless they come first. Identifiers keep their spelling (`AnvlArray`, `stablehlo`). Example: "Get the Shape of an Array".
 * Never edit `.Rd` files manually. Instead, edit the corresponding roxygen2 comments (lines starting with `#'`) and run `devtools::document()` to re-generate the `.Rd` files.
 * Never edit `README.md` directly -- it is generated from `README.Rmd`. Always edit `README.Rmd` and then run `devtools::build_readme()` to regenerate `README.md`.
 * When adding a new S3 methods (such as `print.<Class-Name>`), always run `devtools::document()` afterwards to re-generate the NAMESPACE.
