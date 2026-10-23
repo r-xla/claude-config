@@ -5,8 +5,8 @@
 r-xla brings XLA-based machine learning compilation to R.
 All packages are developed together as a cohesive ecosystem -- when implementing a feature that spans multiple packages, make changes across all of them in a single effort.
 For example, adding a new operation may require changes in stablehlo (IR), pjrt (execution), anvl (user API), and xlamisc (generics).
-They all share a common CLAUDE.md document (this file), but each have their own CLAUDE.md as well.
-If you make changes to a repository, always ensure that you have read it's specific CLAUDE.md as well.
+They all share a common AGENTS.md document (this file), but each have their own AGENTS.md as well.
+If you make changes to a repository, always ensure that you have read its specific AGENTS.md as well.
 
 The packages form a layered stack:
 
@@ -151,13 +151,13 @@ To check for linter errors, run `jarl check .` from the package root.
 
 When adding a new exported function, ensure it's in `_pkgdown.yml` file.
 
-## Updating CLAUDE.md/.claude
+## Updating AGENTS.md/.claude
 
-When asked to make changes to CLAUDE.md (or create a new skill), there are two cases:
+When asked to make changes to AGENTS.md (or create a new skill), there are two cases:
 
 1. The rule is project-specific (e.g. only applies to the `pjrt` package).
-   In this case, edit `pjrt/CLAUDE.md` or `pjrt/.claude/`
-2. It's a general development guideline, then add it to `claude-config/CLAUDE.md` or `/claude-config/.claude`
+   In this case, edit `pjrt/AGENTS.md` or `pjrt/.claude/`
+2. It's a general development guideline, then add it to `claude-config/AGENTS.md` or `/claude-config/.claude`
 
 ## Git
 
